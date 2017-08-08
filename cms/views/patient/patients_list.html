@@ -90,11 +90,12 @@
                                                 <thead>
                                                     <tr>
                                                         <!--<th>ID</th>-->
-                                                        <th>FirstName</th>
-                                                        <th>MiddelName</th>
-                                                        <th>LastName</th>
+                                                        <th>Patient Name</th>
+                                                       <!-- <th>MiddelName</th>-->
+                                                        <!--<th>LastName</th>-->
                                                         <th>Entry Date</th>
                                                         <th>Mobile</th>
+                                                        <th>Address</th>
                                                         <th class="fooo"></th>
                                                     </tr>
                                                 </thead>
@@ -102,13 +103,14 @@
                                                     <tr ng-repeat="pat in patlist.patients | filter : patlist.searching:strict">
 
                                                         <!--<td>{{ pat.id }}</td>-->
-                                                        <td>{{ pat.firstName }}</td>
-                                                        <td>{{ pat.middelName }}</td>
-                                                        <td>{{ pat.lastName }}</td>
+                                                        <td class="text-capitalize">{{ pat.firstName }} <strong> {{ pat.middelName }} </strong>  {{ pat.lastName }}</td>
+                                                        <!--<td>{{ pat.middelName }}</td>-->
+                                                       <!-- <td>{{ pat.lastName }}</td>-->
                                                         <td>{{ pat.entryDate | date : format : "LLLL" }}</td>
                                                         <td style="border-right: 0px;">{{ pat.mobile }}</td>
+                                                        <td class="text-capitalize">{{pat.country}} / {{pat.city}} </td>
                                                         <td class="text-center fooo" style="border-left: 0px;">
-                                                        <a ng-href="{{patlist.serverPath}}/#/consultation/new_consultation/{{pat.id}}" target="_blank">Kawth</a>
+                                                        <!--<a ng-href="{{patlist.serverPath}}/#/consultation/new_consultation/{{pat.id}}" target="_blank">Kawth</a>-->
                                                             <div class="btn-group" dropdown>
                                                                 <button id="split-button" type="button" class="btn btn-primary btn-xs" ui-sref="consultation.consultation_list({patientid: pat.id })">Consultations</button>
                                                                 <button type="button" class="btn btn-primary btn-xs" dropdown-toggle>

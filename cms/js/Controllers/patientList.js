@@ -19,10 +19,10 @@ function patientList(appSettings, patientResource, DTOptionsBuilder, DTColumnBui
     patlist.dtOptions = DTOptionsBuilder.newOptions()
         .withDOM('<"html5buttons"B>lTfgtp<"bottom"i<"clear">>')
         .withButtons([
-            { extend: 'copy', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2, 3, 4] } },
-            { extend: 'csv', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2, 3, 4] } },
-            { extend: 'excel', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2, 3, 4] } },
-            { extend: 'pdf', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2, 3, 4] } },
+            { extend: 'copy', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },
+            { extend: 'csv', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },
+            { extend: 'excel', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },
+            { extend: 'pdf', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },
             {
                 extend: 'print',
 
