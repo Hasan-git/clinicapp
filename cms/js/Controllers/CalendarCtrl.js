@@ -596,7 +596,7 @@ function CalendarCtrl(appSettings, $scope, $modal, $filter, appointmentResource,
     var hub = new Hub('AppointmentHub',
       {
           //rootPath: "http://localhost:63392/signalr",
-          rootPath: appSettings.serverPath + "signalr",
+          rootPath: appSettings.serverPath + "/signalr",
           jsonp: true,
           logging: false,
           transport: ['webSockets', 'longPolling'],
