@@ -3,7 +3,7 @@
     .controller('CalendarCtrl', CalendarCtrl)
 ;
 
-function CalendarCtrl(Hub,$scope, $modal, $filter, appointmentResource, uiCalendarConfig, $compile, $templateCache, patientsData, toaster, $rootScope) {
+function CalendarCtrl(appSettings, $scope, $modal, $filter, appointmentResource, uiCalendarConfig, $compile, $templateCache, patientsData, toaster, $rootScope) {
 
     // Render event 
     //$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
@@ -595,7 +595,8 @@ function CalendarCtrl(Hub,$scope, $modal, $filter, appointmentResource, uiCalend
 
     var hub = new Hub('AppointmentHub',
       {
-          rootPath: "http://localhost:63392/signalr",
+          //rootPath: "http://localhost:63392/signalr",
+          rootPath: appSettings.serverPath + "signalr",
           jsonp: true,
           logging: false,
           transport: ['webSockets', 'longPolling'],
@@ -608,7 +609,6 @@ function CalendarCtrl(Hub,$scope, $modal, $filter, appointmentResource, uiCalend
                   console.log(id)
               },
               'updatedAppointment': function (appointment) {
-                  console.log(appointment)
                   var events = uiCalendarConfig.calendars.myCalendar1.fullCalendar('clientEvents')
 
                   events.map(function (val, key) {
@@ -704,7 +704,6 @@ function CalendarCtrl(Hub,$scope, $modal, $filter, appointmentResource, uiCalend
                   })
               },
               'paymentReleased': function (appointment) {
-                  console.log(appointment)
                   var events = uiCalendarConfig.calendars.myCalendar1.fullCalendar('clientEvents')
 
                   events.map(function (val, key) {
