@@ -4746,7 +4746,8 @@ ul.notes li div .note-edit {
 /*Time Picker*/
 
 .display-box {
-        display: -webkit-box;
+       /*display: -webkit-box;*/
+       float:left;
 }
 
 

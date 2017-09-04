@@ -7,6 +7,7 @@
         return {
             patient: $resource(appSettings.serverPath + "/api/Patients/:id", null,
             {
+                'post': { method: 'POST' },
                 'get': { method: 'GET'},
                 'update': { method: 'PUT' },
                 'deletePatient': {

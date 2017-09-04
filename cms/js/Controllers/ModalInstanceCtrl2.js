@@ -17,6 +17,16 @@ function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientR
     };
     $scope.timeWarning = false;
 
+    var d = new Date();
+    d.setHours(12);
+    d.setMinutes(0);
+    $scope.min = d;
+
+    var d2 = new Date();
+    d2.setHours(20);
+    d2.setMinutes(30);
+    $scope.max = d2;
+
 
     /////////////////////////
     function isOverlapping(event) {

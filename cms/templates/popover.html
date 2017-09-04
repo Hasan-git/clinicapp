@@ -25,6 +25,7 @@
                         </a>
                     </div>
                     <div class="text-muted font-bold m-b-xs" ng-if="s.description"><i class="">Note: </i>&nbsp;&nbsp;<span>{{s.description}}</span></div>
+                    <div class="text-muted font-bold m-b-xs" ng-if="s.payment"><i class="">payment: </i>&nbsp;&nbsp;<span>{{s.payment}}</span></div>
                 </div>
                
             </div>
@@ -45,8 +46,8 @@
                 <label for="canceled">Canceled</label>
             </div>
             <div class="row" style="border-top:1px solid #e4e5e7">
-                <div class="col-md-4 border-right-p">
-                    <div class="contact-stat-p text-warning cursor-p" ><strong tooltip="Delete visit reservation ?" ng-click="remove(s._id,s.id)" >Delete</strong>
+                <div class="col-md-4 border-right-p " >
+                    <div class="contact-stat-p text-warning cursor-p"   ng-click="remove(s._id,s.id)" ><strong >Delete</strong>
                     </div>
                 </div>
                 <div class="col-md-4 border-right-p">
@@ -57,7 +58,8 @@
                 <div class="col-md-4" style="border-left:1px solid #e4e5e7;">
                     <div class="contact-stat-p cursor-p" >
                         <a ng-if="s.existingPatient==true" target="_blank" ng-href="/#/patient/view_patient/{{s.patientId}}"><strong>Profile</strong></a>
-                        <a ng-if="!s.existingPatient" target="_blank" ng-href="/#/patient/new_patient" ><strong>New-File</strong></a>
+                        <!--/target="_blank" ng-href="/#/patient/new_patient"-->
+                        <a ng-if="!s.existingPatient"  ng-click="newPatientModal(s,s._id,s.id)" ><strong>New-File</strong></a>
                     </div>
                 </div>
             </div>

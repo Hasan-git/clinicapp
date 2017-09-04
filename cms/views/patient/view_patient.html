@@ -27,7 +27,8 @@
                     <div class="col-lg-3">
                         <div class="contact-box center-version">
                             <a style="cursor:auto;">
-                                <img alt="image" class="img-circle" src="img/a2.jpg">
+                                <!--<img alt="image" class="img-circle" src="img/a2.jpg">-->
+                                <i  class="fa fa-4x fa-user" ></i>
                                 <h3 class="m-b-xs" style="text-transform: capitalize;"><strong>{{patientdetails.firstName +" - "+patientdetails.lastName }}</strong></h3>
                                 <div class="font-bold">{{patientdetails.occupation || ""}}</div>
                                 <div class="m-t-md ">
@@ -67,7 +68,7 @@
                                             <td>{{patientdetails.city}}/ {{patientdetails.street}}</td>
                                         </tr>
                                             <tr ng-show="patientdetails.InsuranceCompany">
-                                                <td>Insurance C.</td>
+                                                <td>Grantor</td>
                                                 <td>{{patientdetails.InsuranceCompany}}</td>
                                             </tr>
                                         </tbody>

@@ -4,12 +4,13 @@ angular
     .controller('newFollowUp', newFollowUp)
 ;
 
-function newFollowUp(appSettings, $scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
+function newFollowUp(appointmentResource,appSettings, $scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
 
     $scope.appSettings = appSettings
     // idOfpatient used to inject in header menu
     $scope.idOfpatient = $stateParams.patientid;
     $scope.appSettings = appSettings
+    $scope.showPayment = false;
 
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -19,6 +20,23 @@ function newFollowUp(appSettings, $scope, $stateParams, followUpResource, $rootS
             $scope.age = ageCalculated >= 0 ? ageCalculated : "Unknown";
         });
     })
+
+    appointmentResource.appointments.GetByPatientId({ id: $scope.idOfpatient }).$promise.then(function (data) {
+        $scope.appointment = JSON.parse(angular.toJson(data));
+        if (data)
+            $scope.showPayment = true
+    }, function (err) {
+        console.log(err)
+    });
+
+    $scope.payment = function () {
+        appointmentResource.appointments.paymentReleased({ id: $scope.appointment.id, payment: $scope.appointment.payment }).$promise.then(function (data) {
+            $scope.appointment = JSON.parse(angular.toJson(data));
+            toaster.pop('success', "Notification", "Payment Released", 2000);
+        }, function (err) {
+            console.log(err)
+        });
+    }
 
     $scope.inspiniaTemplate = 'views/common/notify.html';
 

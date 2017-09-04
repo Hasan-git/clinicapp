@@ -34,7 +34,8 @@
         'ui.tree', // Nestable list
         'cgNotify', // Angular notify
         'colorpicker.module', // Color picker
-        'xeditable',                    // X-editable       
+        'xeditable',                    // X-editable     
+        "SignalR",
     ]);
 
 })();

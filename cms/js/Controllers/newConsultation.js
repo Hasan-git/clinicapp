@@ -4,10 +4,11 @@ angular
     .controller('newConsultation', newConsultation)
 ;
 
-function newConsultation(appSettings, $scope, $stateParams, consultationResource, $rootScope, notify, toaster, $state, FileUploader, patientResource) {
+function newConsultation(appointmentResource,appSettings, $scope, $stateParams, consultationResource, $rootScope, notify, toaster, $state, FileUploader, patientResource) {
 
     $scope.appSettings = appSettings
     $scope.idOfpatient = $stateParams.patientid;
+    $scope.showPayment = false;
     //$scope.patient.entryDate = new Date();
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -17,6 +18,23 @@ function newConsultation(appSettings, $scope, $stateParams, consultationResource
             $scope.age = ageCalculated >= 0 ? ageCalculated : "Unknown";
         });
     })
+
+    appointmentResource.appointments.GetByPatientId({ id: $scope.idOfpatient }).$promise.then(function (data) {
+        $scope.appointment = JSON.parse(angular.toJson(data));
+        if (data)
+            $scope.showPayment = true
+    }, function (err) {
+        console.log(err)
+    });
+
+    $scope.payment = function () {
+        appointmentResource.appointments.paymentReleased({ id: $scope.appointment.id, payment: $scope.appointment.payment }).$promise.then(function (data) {
+            $scope.appointment = JSON.parse(angular.toJson(data));
+            toaster.pop('success', "Notification", "Payment Released", 2000);
+        }, function (err) {
+            console.log(err)
+        });
+    }
 
     //----------------------------
     //      Uploader Settings

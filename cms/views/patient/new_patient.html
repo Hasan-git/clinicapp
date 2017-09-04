@@ -107,6 +107,19 @@
                                                 <div ng-show="newPatientForm.inputPatientMobile.$error.pattern">Only numbers are allowed</div>
                                             </div>
                                         </div>
+                                        <div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.inputReferrer.$invalid && newPatientForm.inputReferrer.$dirty}">
+                                            <label class="control-label">Referrer</label>
+                                            <input type="text" class="form-control" name="inputReferrer" placeholder="Referrer" ng-model="patient.referrer">
+                                            <div class="help-block m-b-n m-t-none display-box" ng-messages="newPatientForm.inputReferrer.$error" ng-show="newPatientForm.inputReferrer.$dirty" ng-messages-include="ngmessages.html">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.insurance.$invalid && newPatientForm.insurance.$dirty }">
+                                            <label class="control-label">Grantor</label>
+                                            <input type="text" name="insurance" ng-model="patient.insuranceCompany" class="form-control" placeholder="Grantor" ng-minlength="3">
+                                            <div class="help-block m-b-n m-t-none display-box" ng-messages="newPatientForm.insurance.$error" ng-show="newPatientForm.insurance.$dirty" ng-messages-include="ngmessages.html"></div>
+                                        </div>
 
                                         <div class="form-group m-t-md col-sm-6 m-t-lg text-left" ng-class="{'has-error':newPatientForm.gender.$invalid && newPatientForm.gender.$dirty }">
                                             <label class="control-label">Gender <small>*</small></label>
@@ -199,7 +212,7 @@
                                         </div>
 
 
-                                        <div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.inputReferrer.$invalid && newPatientForm.inputReferrer.$dirty}">
+                                        <!--<div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.inputReferrer.$invalid && newPatientForm.inputReferrer.$dirty}">
                                             <label class="control-label">Referrer</label>
                                             <input type="text" class="form-control" name="inputReferrer" placeholder="Referrer" ng-model="patient.referrer">
                                             <div class="help-block m-b-n m-t-none display-box" ng-messages="newPatientForm.inputReferrer.$error" ng-show="newPatientForm.inputReferrer.$dirty" ng-messages-include="ngmessages.html">
@@ -208,10 +221,10 @@
 
 
                                         <div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.insurance.$invalid && newPatientForm.insurance.$dirty }">
-                                            <label class="control-label">Insurance Company</label>
-                                            <input type="text" name="insurance" ng-model="patient.insuranceCompany" class="form-control" placeholder="Insurance" ng-minlength="3">
+                                            <label class="control-label">Grantor</label>
+                                            <input type="text" name="insurance" ng-model="patient.insuranceCompany" class="form-control" placeholder="Grantor" ng-minlength="3">
                                             <div class="help-block m-b-n m-t-none display-box" ng-messages="newPatientForm.insurance.$error" ng-show="newPatientForm.insurance.$dirty" ng-messages-include="ngmessages.html"></div>
-                                        </div>
+                                        </div>-->
 
 
                                         <div class="form-group col-sm-6 col-md-4" ng-class="{'has-error':newPatientForm.occupation.$invalid && newPatientForm.occupation.$dirty }">

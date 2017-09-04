@@ -400,7 +400,7 @@ function config($stateProvider, $urlRouterProvider) {
 angular
     .module('inspinia')
     .config(config)
-    .run(function ($rootScope, $state, orders, currentUser) {
+    .run(function ($rootScope, $state, orders, currentUser,$anchorScroll) {
         $rootScope.$state = $state;
         orders.callToPopCache();
 
@@ -414,6 +414,9 @@ angular
             if (user.isLoggedIn === false) {
                 $location.path('home');
             } 
+        });
+        $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+            $anchorScroll();
         });
 
     });

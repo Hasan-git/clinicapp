@@ -4,11 +4,12 @@
             <li class="nav-header">
 
                 <div class="dropdown profile-element">
-                    <img alt="image" class="img-circle" src="img/profile_small.jpg"/>
+                    <!--<img alt="image" class="img-circle" src="img/profile_small.jpg"/>-->
+                    <i class="fa fa-3x fa-user-md text-white"></i>
                     <a class="dropdown-toggle" href>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">Dr. David Williams</strong>
+                                    <strong class="font-bold">Dr. Haithem Al-Rifaii</strong>
                              </span>
                                 <span class="text-muted text-xs block">Doctor/Assistant <b class="caret"></b></span>
                             </span>
@@ -31,14 +32,23 @@
                 </ul>
             </li>
 
-            <li ng-class="{active: $state.includes('patient'),active: $state.includes('consultation')}">
+            <!--<li ng-class="{active: $state.includes('patient'),active: $state.includes('consultation')}">
                 <a href=""><i class="fa fa-user"></i> <span class="nav-label">Patient</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('patient'),in: $state.includes('consultation')}">
                     <li ui-sref-active="active"><a ui-sref="patient.new_patient">New Patient</a></li>
                     
                     <li ui-sref-active="active"><a ui-sref="patient.patients_list">Patients list</a></li>
                 </ul>
+            </li>-->
+
+            <li ng-class="{active: $state.includes('patient.new_patient')}">
+                <a href="" ui-sref="patient.new_patient" ui-sref-active="active"><i class="fa fa-user"></i> <span class="nav-label">New Patient</span></a>
             </li>
+
+            <li ng-class="{active: $state.includes('patient.patients_list')}">
+                <a href="" ui-sref="patient.patients_list" ui-sref-active="active"><i class="fa fa-users"></i> <span class="nav-label">Patients list</span></a>
+            </li>
+
            <!-- Assistant Zone -->
             <!--<li ng-class="{active: $state.includes('assistant')}">
                 <a href=""><i class="fa fa-male"></i> <span class="nav-label">Assistant</span><span class="fa arrow"></span></a>
@@ -48,12 +58,18 @@
               
                 </ul>
             </li>-->
-            <li ng-class="{active: $state.includes('dates')}">
+            <!--<li ng-class="{active: $state.includes('dates')}">
                 <a href=""><i class="fa fa-calendar-o"></i> <span class="nav-label">Appointment</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('dates')}">
                     <li ui-sref-active="active"><a ui-sref="dates.appointment">Appointment</a></li>
                 </ul>
+            </li>-->
+
+            <li ng-class="{active: $state.includes('dates')}">
+                <a href="" ui-sref="dates.appointment" ui-sref-active="active"><i class="fa fa-calendar-o"></i> <span class="nav-label">Appointments</span></a>
             </li>
+
+
             <li ng-class="{active: $state.includes('extra')}" ng-show="false">
                 <a href=""><i class="fa fa-flask"></i> <span class="nav-label">Extra</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('extra')}">

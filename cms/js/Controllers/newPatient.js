@@ -26,7 +26,13 @@ function newPatient(patientResource, toaster, notify, currentUser, $rootScope, $
                 var patientId = JSON.parse(angular.toJson(data)).patientId
                 //$state.go('consultation.consultation_list', { patientid: patientId });
                 toaster.pop('success', "Notification", "Patient created successfully", 4000);
-                openModal(patientId, form);
+
+                // Modal for asking the user to create a new patient or naviagte for patient visits ignored
+                //openModal(patientId, form);
+                
+                // reload page rather than asking for modal navigation
+                $window.location.reload();
+
             }, function (response) {
                 $scope.loading = false;
                 if (response.data.modelState) {
