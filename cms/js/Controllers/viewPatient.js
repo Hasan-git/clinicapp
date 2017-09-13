@@ -4,9 +4,10 @@ angular
     .controller('viewPatient', viewPatient)
 ;
 
-function viewPatient($stateParams, patientdetails, $modal, patientResource, $scope, $state, resolvedConsultations) {
+function viewPatient(appSettings,$stateParams, patientdetails, $modal, patientResource, $scope, $state, resolvedConsultations) {
     //alert(angular.toJson(patientdetails));
     var patdetails = this;
+    $scope.appSettings = appSettings
 
     console.log(resolvedConsultations)
     $scope.consultations = resolvedConsultations;

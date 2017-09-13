@@ -22,15 +22,15 @@
     <div class="col-lg-12">
         <div class="wrapper wrapper-content">
             <div class="animated fadeInRightBig">
-                <div class="row m-b-md">
+                <div class="row">
                     <div class="col-lg-4">
                         <div class="widget style1 navy-bg">
                             <div class="row vertical-align">
                                 <div class="col-xs-2">
                                     <a class="fa fa-user fa-3x text-white" tooltip="Click to edit patient" ng-href="/#/patient/edit_patient/{{patientResolved.id}}" target="_blank"></a>
                                 </div>
-                                <div class="col-xs-9 text-left" style="margin-top: 10px;">
-                                    <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old</span>
+                                <div class="col-xs-9 text-left text-capitalize" style="margin-top: 0px; ">
+                                    <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old <div><small>by: {{patientResolved.referrer}}</small> </div></span>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <!--<div class="col-lg-4">
                         <div class="widget style1 white-bg" ng-if="showPayment">
                             <div class="row vertical-align">
                                 <div class="col-xs-12 text-left" style="">
@@ -59,12 +59,31 @@
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+
+                    <div class="col-lg-4" ng-if="showPayment">
+                        <div class="widget style1 white-bg">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" ng-click="payment()">Pay</button>
+                                </span>
+                                <input type="text" class="form-control" ng-model="appointment.payment" placeholder="Payment" name="payment">
+                                <span class="input-group-btn" ng-show="eventOut">
+                                    <button class="btn btn-danger" type="button" ng-click="eventCheckout()">Out</button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
+
                     <div class="clearfix"></div>
                 </div>
 
 
-                <div class="tabs-container">
+                <div class="tabs-container " ng-class="{'col-xs-9':showVisits == true}">
+                    <div class="m-b-md">
+                        <!--<button class="btn btn-primary" type="submit" ng-click="submit()" ng-disabled="editFollowUpForm.$invalid"><i class="fa fa-floppy-o"></i>&nbsp;Save Changes</button>-->
+                    </div>
                     <form method="get" class="form-horizontal" style="margin-top:15px;" name="editFollowUpForm" id="topTab">
                         <tabset>
                             <tab heading="Condition">
@@ -108,7 +127,7 @@
                                 <div class="form-group" ng-class="{'has-error':editFollowUpForm.inputSubjective.$invalid && editFollowUpForm.inputSubjective.$dirty}">
                                     <label class="col-sm-2 control-label">Subjective :</label>
                                     <div class="col-sm-8">
-                                        <textarea  text-multi-line next-input next-field="physicalExam" next-tab="tabObjective" class="form-control" ng-model="followUp.subjective" rows="1" name="inputSubjective"></textarea>
+                                        <textarea text-multi-line next-input next-field="physicalExam" next-tab="tabObjective" class="form-control" ng-model="followUp.subjective" rows="1" name="inputSubjective"></textarea>
                                     </div>
                                     <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
                                         <!-- Validation -->
@@ -124,7 +143,7 @@
                                 <div class="clearfix"></div>
                             </tab>
                             <tab heading="Objective" active="tabObjective">
-                                
+
                                 <div class="form-group m-t-lg">
                                     <label class="col-sm-2 control-label">Physical Exam :</label>
                                     <div class="col-sm-8">
@@ -164,9 +183,8 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </tab>
-
                             <tab heading="Assessment" active="tabAssessment">
-                            
+
                                 <div class="form-group m-t-lg" ng-class="{'has-error':editFollowUpForm.inputAssessment.$invalid && editFollowUpForm.inputAssessment.$dirty}">
                                     <label class="col-sm-2 control-label">Assessment :</label>
                                     <div class="col-sm-8">
@@ -185,9 +203,8 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </tab>
-
                             <tab heading="Treatment Plan" active="tabTreatment">
-                            
+
                                 <div class="form-group m-t-lg">
                                     <label class="col-sm-2 control-label">Medication :</label>
                                     <div class="col-sm-8">
@@ -218,19 +235,18 @@
                                         <textarea text-multi-line next-input next-field="note" next-tab="tabNote" class="form-control" ng-model="followUp.other" rows="1" name=""></textarea>
                                     </div>
                                 </div>
-                            
+
                                 <div class="form-group col-xs-12 col-sm-12 m-t-md text-center">
                                     <button class="btn btn-primary btn-w-m" ng-click="next();tabNote=true"> Next <i class="fa fa-arrow-circle-right p-l-xs"></i></button>
                                 </div>
                                 <div class="clearfix"></div>
 
                             </tab>
-
                             <tab heading="Note" active="tabNote">
                                 <div class="form-group m-t-lg" ng-class="{'has-error':editFollowUpForm.inputAdditionalInformation.$invalid && editFollowUpForm.inputAdditionalInformation.$dirty}">
                                     <label class="col-sm-2 control-label">Additional Information :</label>
                                     <div class="col-sm-8">
-                                        <textarea text-multi-line next-field="note" next-tab="tabNote"  id="note" class="form-control" ng-model="followUp.additionalInformation" rows="1" name="inputAdditionalInformation"></textarea>
+                                        <textarea text-multi-line next-field="note" next-tab="tabNote" id="note" class="form-control" ng-model="followUp.additionalInformation" rows="1" name="inputAdditionalInformation"></textarea>
                                     </div>
                                     <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
                                         <!-- Validation -->
@@ -249,62 +265,60 @@
                                 </div>
 
                             </tab>
+                            <!-- <tab heading="Sheet">
 
-                           <!-- <tab heading="Sheet">
+                                 <div class="hr-line-dashed"></div>
+                                 <div class="form-group">
+                                     <label class="col-sm-2 control-label">Clinic :</label>
+                                     <div class="col-sm-8">
+                                         <select-clinic doctor-id="{{rootDoctorId}}" my-directive-var="consultation"></select-clinic>
+                                     </div>
+                                 </div>
 
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Clinic :</label>
-                                    <div class="col-sm-8">
-                                        <select-clinic doctor-id="{{rootDoctorId}}" my-directive-var="consultation"></select-clinic>
-                                    </div>
-                                </div>
-
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group" ng-class="{'has-error':editFollowUpForm.inputObjective.$invalid && editFollowUpForm.inputObjective.$dirty}">
-                                    <label class="col-sm-2 control-label">Objective :</label>
-                                    <div class="col-sm-8" ng-controller="modalDemoCtrl">
-                                        <textarea text-multi-line class="form-control" ng-model="followUp.objective" rows="1" name="inputObjective"></textarea>
-                                        <a ng-click="main.labTabActive()" id="labo"><i class="fa fa-desktop"></i> Add laboratory Data</a>
-                                        &nbsp; | &nbsp;
-                                        <a ng-click="mission()">
-                                            <i class="fa fa-plus"></i>&nbsp;Add Note
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
-                                        <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.inputObjective.$error" ng-if="editFollowUpForm.inputObjective.$dirty" ng-messages-include="ngmessages.html">
-                                            <div ng-show="editFollowUpForm.inputObjective.$error.pattern">Only letters and numbers -_. are allowed !</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <div class="hr-line-dashed"></div>
-                                <div class="form-group" ng-class="{'has-error':editFollowUpForm.diagnoses.$invalid && editFollowUpForm.diagnoses.$dirty}">
-                                    <label class="col-sm-2 control-label">Diagnoses :</label>
-                                    <div class="col-sm-8">
-                                        <textarea text-multi-line class="form-control" ng-model="followUp.diagnoses" rows="6" name="diagnosis"></textarea>
-                                    </div>
-                                    <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
-                                        <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.diagnoses.$error" ng-show="editFollowUpForm.diagnoses.$dirty" ng-messages-include="ngmessages.html">
-                                            <div ng-show="editFollowUpForm.diagnoses.$error.pattern">Only letters and numbers -_. are allowed !</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                 <div class="hr-line-dashed"></div>
+                                 <div class="form-group" ng-class="{'has-error':editFollowUpForm.inputObjective.$invalid && editFollowUpForm.inputObjective.$dirty}">
+                                     <label class="col-sm-2 control-label">Objective :</label>
+                                     <div class="col-sm-8" ng-controller="modalDemoCtrl">
+                                         <textarea text-multi-line class="form-control" ng-model="followUp.objective" rows="1" name="inputObjective"></textarea>
+                                         <a ng-click="main.labTabActive()" id="labo"><i class="fa fa-desktop"></i> Add laboratory Data</a>
+                                         &nbsp; | &nbsp;
+                                         <a ng-click="mission()">
+                                             <i class="fa fa-plus"></i>&nbsp;Add Note
+                                         </a>
+                                     </div>
+                                     <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
+                                         <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.inputObjective.$error" ng-if="editFollowUpForm.inputObjective.$dirty" ng-messages-include="ngmessages.html">
+                                             <div ng-show="editFollowUpForm.inputObjective.$error.pattern">Only letters and numbers -_. are allowed !</div>
+                                         </div>
+                                     </div>
+                                 </div>
 
                              <div class="hr-line-dashed"></div>
-                                <div class="form-group" ng-class="{'has-error':editFollowUpForm.inputPlan.$invalid && editFollowUpForm.inputPlan.$dirty}">
-                                    <label class="col-sm-2 control-label">Plan–intended :</label>
-                                    <div class="col-sm-8">
-                                        <textarea text-multi-line class="form-control" ng-model="followUp.plan" rows="1" name="inputPlan"></textarea>
-                                    </div>
-                                    <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
-                                        <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.inputPlan.$error" ng-if="editFollowUpForm.inputPlan.$dirty" ng-messages-include="ngmessages.html">
-                                            <div ng-show="editFollowUpForm.inputPlan.$error.pattern">Only letters and numbers -_. are allowed !</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </tab>-->
+                                 <div class="form-group" ng-class="{'has-error':editFollowUpForm.diagnoses.$invalid && editFollowUpForm.diagnoses.$dirty}">
+                                     <label class="col-sm-2 control-label">Diagnoses :</label>
+                                     <div class="col-sm-8">
+                                         <textarea text-multi-line class="form-control" ng-model="followUp.diagnoses" rows="6" name="diagnosis"></textarea>
+                                     </div>
+                                     <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
+                                         <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.diagnoses.$error" ng-show="editFollowUpForm.diagnoses.$dirty" ng-messages-include="ngmessages.html">
+                                             <div ng-show="editFollowUpForm.diagnoses.$error.pattern">Only letters and numbers -_. are allowed !</div>
+                                         </div>
+                                     </div>
+                                 </div>
 
+                              <div class="hr-line-dashed"></div>
+                                 <div class="form-group" ng-class="{'has-error':editFollowUpForm.inputPlan.$invalid && editFollowUpForm.inputPlan.$dirty}">
+                                     <label class="col-sm-2 control-label">Plan–intended :</label>
+                                     <div class="col-sm-8">
+                                         <textarea text-multi-line class="form-control" ng-model="followUp.plan" rows="1" name="inputPlan"></textarea>
+                                     </div>
+                                     <div class="col-sm-4 col-sm-offset-2 text-left m-b-n font-xs">
+                                         <div class="help-block m-b-n m-t-none display-box" ng-messages="editFollowUpForm.inputPlan.$error" ng-if="editFollowUpForm.inputPlan.$dirty" ng-messages-include="ngmessages.html">
+                                             <div ng-show="editFollowUpForm.inputPlan.$error.pattern">Only letters and numbers -_. are allowed !</div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </tab>-->
                             <tab heading="Media" active="main.isActive">
                                 <div class="row" nv-file-drop="" uploader="uploader">
 
@@ -387,11 +401,161 @@
 
                                 </div>
                             </tab>
-
+                            <li style="float:right;"  >
+                                <a href="" style="padding:0;">
+                                    <button class="btn" ng-class="{'btn-primary':!editFollowUpForm.$invalid}"  ng-disabled="editFollowUpForm.$invalid" ng-click="submit()" >
+                                        <i class="fa fa-floppy-o"></i> 
+                                        SAVE
+                                    </button>
+                                </a>
+                            </li>
+                            <li style="float:right;">
+                                <a href="" style="padding:0;" ng-click="showPre()">
+                                    <button class="btn btn-success" data-toggle="collapse" ng-click="showVisits=!showVisits" ng-init="showVisits=false" data-target="#demo">Pre Visits</button>
+                                    <!--<button class="btn" ng-class="{'btn-primary':!editFollowUpForm.$invalid}" ng-disabled="editFollowUpForm.$invalid" ng-click="submit()">
+                                        <i class="fa fa-floppy-o"></i>
+                                        SAVE
+                                    </button>-->
+                                </a>
+                            </li>
                         </tabset>
                     </form>
+                </div>
+
+                <div class="col-xs-3" style="padding: 60px 0px 0px 0px;">
+                    <!--<button class="btn btn-success" data-toggle="collapse" ng-click="showVisits=!showVisits" ng-init="showVisits=false" data-target="#demo">Pre Visits</button>-->
+
+                    <div id="demo" class="collapse pre-visits">
+                        <div class="col-xs-12" style="padding:0;">
+                            <div class="header">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-white" type="button" ng-click="preVisit()"><i class="fa fa-chevron-left"></i></button>
+                                    </span>
+                                    <span class="visit-date">{{selectedVisit.entryDate | date:'MMM d, y'}}<strong>({{(visits.length) - currentVisit}}th)</strong></span>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-white" type="button" ng-click="nextVisit()"><i class="fa fa-chevron-right"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 selected-visit">
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.condition">
+                                    <div class="label-primary"><strong>Condition ( <span class="text-uppercase">{{selectedVisit.visitType}}</span> )  </strong></div>
+                                    <div class="content">{{selectedVisit.condition}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.title">
+                                    <div class="label-primary"><strong>Title</strong></div>
+                                    <div class="content">{{selectedVisit.title}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.chiefComplaint">
+                                    <div class="label-primary"><strong>Chief Complaint</strong></div>
+                                    <div class="content">{{selectedVisit.chiefComplaint}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.presentHistory">
+                                    <div class="label-primary"><strong>Present History</strong></div>
+                                    <div class="content">{{selectedVisit.presentHistory}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.physicalExam">
+                                    <div class="label-primary"><strong>Physical Exam</strong></div>
+                                    <div class="content">{{selectedVisit.physicalExam}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.subjective">
+                                    <div class="label-primary"><strong>Subjective</strong></div>
+                                    <div class="content">{{selectedVisit.subjective}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.differentialDiagnosis">
+                                    <div class="label-primary"><strong>DifferentialDiagnosis</strong></div>
+                                    <div class="content">{{selectedVisit.differentialDiagnosis}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.lab">
+                                    <div class="label-primary"><strong>lab</strong></div>
+                                    <div class="content">{{selectedVisit.lab}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.radiology">
+                                    <div class="label-primary"><strong>Radiology</strong></div>
+                                    <div class="content">{{selectedVisit.radiology}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.diagnosis">
+                                    <div class="label-primary"><strong>Diagnosis</strong></div>
+                                    <div class="content">{{selectedVisit.diagnosis}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.medication">
+                                    <div class="label-primary"><strong>Medication</strong></div>
+                                    <div class="content">{{selectedVisit.medication}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.assessment">
+                                    <div class="label-primary"><strong>Assessment</strong></div>
+                                    <div class="content">{{selectedVisit.assessment}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.surgery">
+                                    <div class="label-primary"><strong>Surgery</strong></div>
+                                    <div class="content">{{selectedVisit.surgery}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.recommendation">
+                                    <div class="label-primary"><strong>Recommendation</strong></div>
+                                    <div class="content">{{selectedVisit.recommendation}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.additionalInformation">
+                                    <div class="label-primary"><strong>Info</strong></div>
+                                    <div class="content">{{selectedVisit.additionalInformation}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.other">
+                                    <div class="label-primary"><strong>Other Treatment</strong></div>
+                                    <div class="content">{{selectedVisit.other}}</div>
+                                </div>
+                                <div class="col-xs-12 visit-prop" ng-show="selectedVisit.images.length">
+                                    <div class="label-primary"><strong>Images</strong></div>
+                                    <div class="" style="padding-left0px;">
+                                        <span ng-repeat="image in selectedVisit.images" >
+                                            <img width="60" height="60" ng-src="{{appSettings.serverPath}}/images/{{image.imageName}}" style="padding:3px;" onclick="window.open(this.src)" class="pointer"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<style>
+    .pre-visits{
+        background-color:#ffffff;
+        border:1px solid #ddd;
+        margin-bottom:15px;
+    }
+    .pre-visits .header{
+        width: 220px;
+        text-align: center;
+        padding:5px;
+        margin: auto;
+    }
+    .pre-visits .visit-date{
+        line-height: 33px;
+        font-size: 12px;
+    }
+    .pre-visits .header span > button{
+        padding: 1px 14px;
+    }
+
+    .pre-visits .header span > button > i{
+        font-size: 12px;
+    }
+    .pre-visits .selected-visit {
+        padding:0;
+    }
+    .pre-visits .selected-visit .visit-prop > div{
+        font-size: 11px;
+        padding: 0px 10px;
+    }
+    .pre-visits .selected-visit .visit-prop .content{
+        padding-left:10px;
+        margin-bottom: 2px;
+    }
+        
+</style>

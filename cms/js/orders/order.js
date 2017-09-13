@@ -28,7 +28,15 @@ function patientsData(patientResource,$q) {
         
         var anotherDeferred = $q.defer();
         patientResource.patient.query(function (data) {
+            data.map(function (patient) {
+                patient.filterTerms={
+                    firstName: patient.firstName,
+                    middelName: patient.middelName,
+                    lastName: patient.lastName
+                }
+            })
             profileRepository = data;
+
             anotherDeferred.resolve("Done");
         });
        return anotherDeferred.promise;

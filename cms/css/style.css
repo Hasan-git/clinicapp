@@ -5267,3 +5267,9 @@ textarea.textarea-grow:focus {
             }
         }
         /* Spinner */
+        .fc-content {
+            text-transform: capitalize;
+        }
+        .wrapper.wrapper-content {
+              padding: 10px 0px;
+        }

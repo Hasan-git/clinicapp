@@ -18,6 +18,8 @@ function patientList(appSettings, patientResource, DTOptionsBuilder, DTColumnBui
 
     patlist.dtOptions = DTOptionsBuilder.newOptions()
         .withDOM('<"html5buttons"B>lTfgtp<"bottom"i<"clear">>')
+    .withOption('lengthMenu', [10,30,50, 100, 150, 200])
+    .withDisplayLength(30)
         .withButtons([
             { extend: 'copy', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },
             { extend: 'csv', title: 'Patient List', filename: "Patients", exportOptions: { columns: [0, 1, 2] } },

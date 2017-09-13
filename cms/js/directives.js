@@ -92,7 +92,17 @@ function iboxTools($timeout) {
         restrict: 'A',
         scope: true,
         templateUrl: 'views/common/ibox_tools.html',
-        controller: function ($scope, $element) {
+        controller: function ($scope, $element,$attrs) {
+
+            if ($attrs['iboxClosed']) {
+                var ibox = $element.closest('div.ibox');
+                var icon = $element.find('i:first');
+                var content = ibox.find('div.ibox-content');
+                content.slideToggle(200);
+            }
+
+            
+
             // Function for collapse ibox
             $scope.showhide = function () {
                 var ibox = $element.closest('div.ibox');

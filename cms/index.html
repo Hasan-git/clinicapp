@@ -85,7 +85,8 @@
     <!-- Main Inspinia CSS files -->
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.css" rel="stylesheet" />
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.css" rel="stylesheet" />-->
+    <link href="js/toastr.min.css" rel="stylesheet" />
 
     <link href="js/plugins/loading-buttons/ladda-themeless.min.css" rel="stylesheet" />
 
@@ -107,7 +108,7 @@
 
 <!-- ControllerAs syntax -->
 <!-- Main controller with serveral data used in Inspinia theme on diferent view -->
-<body ng-controller="MainCtrl as main">
+<body ng-controller="MainCtrl as main" class="mini-navbar">
 
     <!-- Wrapper-->
     <div id="wrapper" class="">
@@ -323,6 +324,7 @@
     <script src="js/plugins/angular-signalr-hub/jquery.signalR-2.2.1.min.js"></script>
     <script src="js/plugins/angular-signalr-hub/signalr-hub.min.js"></script>
     <script src="js/plugins/fullcalendar/rightClickPlugin.js"></script>
+    <script src="js/plugins//angular-filter/angular-filter.min.js"></script>
 
     <!-- ES5 shim for old browsers UPLOAD -->
     <script src="js/jquery/es5-shim.min.js"></script>

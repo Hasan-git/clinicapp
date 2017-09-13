@@ -65,6 +65,11 @@ function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientR
         }
     }
 
+    $scope.myFilter = function (item) {
+        console.log(item)
+       // return item.lastName === $scope.aaa ;
+    };
+
     $scope.onSelect = function ($item, $model, $label) {
         $scope.task.mobile = $item.mobile;
         $scope.task.patientId = $item.id;

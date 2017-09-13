@@ -6,6 +6,7 @@
 (function () {
     angular.module('inspinia', [
         'ngCookies',
+        'angular.filter',   //https://github.com/a8m/angular-filter
         'datatables.buttons',
         'angular-ladda',
         'toaster',

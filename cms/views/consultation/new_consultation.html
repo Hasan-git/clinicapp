@@ -42,8 +42,8 @@
                                 <div class="col-xs-2">
                                     <a class="fa fa-user fa-3x text-white" tooltip="Click to edit patient" ng-href="/#/patient/edit_patient/{{patientResolved.id}}" target="_blank" ></a>
                                 </div>
-                                <div class="col-xs-9 text-left" style="margin-top: 10px;">
-                                    <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old</span>
+                                <div class="col-xs-9 text-left text-capitalize" style="margin-top: 0px; ">
+                                    <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old <div><small>by: {{patientResolved.referrer}}</small> </div></span>
                                 </div>
                             </div>
                         </div>
@@ -60,12 +60,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <!--<div class="col-lg-4">
                         <div class="widget style1 white-bg" ng-if="showPayment">
                             <div class="row vertical-align">
-                                <!--<div class="col-xs-2">
-                                    <i class="fa  fa-3x fa-money" ></i>
-                                </div>-->
                                 <div class="col-xs-12 text-left" style="">
                                     <div class="col-xs-9">
                                         <input type="text" class="form-control" ng-model="appointment.payment" placeholder="Payment" name="payment">
@@ -75,7 +72,21 @@
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+                    <div class="col-lg-4" ng-if="showPayment">
+                        <div class="widget style1 white-bg">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" ng-click="payment()">Pay</button>
+                                </span>
+                                <input type="text" class="form-control" ng-model="appointment.payment" placeholder="Payment" name="payment">
+                                <span class="input-group-btn" ng-show="eventOut">
+                                    <button class="btn btn-danger" type="button" ng-click="eventCheckout()">Out</button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="clearfix"></div>
                 </div>
 

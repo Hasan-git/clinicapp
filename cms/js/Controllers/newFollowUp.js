@@ -4,13 +4,25 @@ angular
     .controller('newFollowUp', newFollowUp)
 ;
 
-function newFollowUp(appointmentResource,appSettings, $scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
+function newFollowUp($filter,appointmentResource, appSettings, $scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
 
     $scope.appSettings = appSettings
     // idOfpatient used to inject in header menu
     $scope.idOfpatient = $stateParams.patientid;
     $scope.appSettings = appSettings
     $scope.showPayment = false;
+    $scope.eventOut = false;
+    $scope.showVisits = false;
+    $scope.currentVisit = 0;
+
+    $scope.showPre = function () {
+        setTimeout(function () {
+            $scope.$apply(function () {
+                $scope.message = "Timeout called!";
+                $scope.showVisits = !$scope.showVisits
+            });
+        }, 100);
+    }
 
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -23,11 +35,27 @@ function newFollowUp(appointmentResource,appSettings, $scope, $stateParams, foll
 
     appointmentResource.appointments.GetByPatientId({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.appointment = JSON.parse(angular.toJson(data));
-        if (data)
+        if (data) {
             $scope.showPayment = true
+            if (data.eventStatus != "CheckedOut")
+                $scope.eventOut = true
+        }
+
+        $scope.eventCheckout = function () {
+            appointmentResource.appointments.updateStatus({ id: data.id, status: "CheckedOut" })
+                .$promise.then(function (data) {
+                    $scope.eventOut = false
+                    toaster.pop('success', "Notification", "Patient Checked-Out", 2000);
+                }, function () {
+                    toaster.pop('error', "Notification", "Unable to change status", 3000);
+                });
+        };
+
     }, function (err) {
         console.log(err)
     });
+
+
 
     $scope.payment = function () {
         appointmentResource.appointments.paymentReleased({ id: $scope.appointment.id, payment: $scope.appointment.payment }).$promise.then(function (data) {
@@ -42,8 +70,81 @@ function newFollowUp(appointmentResource,appSettings, $scope, $stateParams, foll
 
     $scope.followUp = new followUpResource;
     $scope.followUp.entryDate = new Date();
+
     consultationResource.consultations.Consultation({ consultationId: $stateParams.consultationId }).$promise.then(function (data) {
+
         $scope.parentConsultation = JSON.parse(angular.toJson(data))
+
+        $scope.visits = [{
+            visitType: "consultation",
+            entryDate: new Date($scope.parentConsultation.entryDate),
+            condition: $scope.parentConsultation.condition,
+            title: $scope.parentConsultation.title,
+            chiefComplaint: $scope.parentConsultation.chiefComplaint,
+            presentHistory: $scope.parentConsultation.presentHistory,
+            physicalExam: $scope.parentConsultation.physicalExam,
+            differentialDiagnosis: $scope.parentConsultation.differentialDiagnosis,
+            lab: $scope.parentConsultation.lab,
+            radiology: $scope.parentConsultation.radiology,
+            diagnosis: $scope.parentConsultation.diagnosis,
+            medication: $scope.parentConsultation.medication,
+            surgery: $scope.parentConsultation.surgery,
+            recommendation: $scope.parentConsultation.recommendation,
+            additionalInformation: $scope.parentConsultation.additionalInformation,
+            other: $scope.parentConsultation.other,
+            images: $scope.parentConsultation.images
+        }]
+
+        $scope.parentConsultation.followUps.map(function (followUp) {
+            $scope.visits.push({
+                visitType: "followUp",
+                entryDate: new Date(followUp.entryDate),
+                condition: followUp.condition,
+                title: followUp.title,
+                subjective: followUp.subjective,
+                assessment: followUp.assessment,
+                physicalExam: followUp.physicalExam,
+                lab: followUp.lab,
+                radiology: followUp.radiology,
+                diagnosis: followUp.diagnosis,
+                medication: followUp.medication,
+                surgery: followUp.surgery,
+                recommendation: followUp.recommendation,
+                additionalInformation: followUp.additionalInformation,
+                other: followUp.other,
+                images: followUp.images
+
+            })
+        })
+
+        $scope.visits = $filter('orderBy')($scope.visits, 'entryDate', true)
+
+        console.log($scope.visits)
+        $scope.selectedVisit = $scope.visits[$scope.currentVisit];
+
+        $scope.nextVisit = function () {
+            if ($scope.currentVisit < $scope.visits.length - 1) {
+                $scope.currentVisit++;
+                $scope.selectedVisit = $scope.visits[$scope.currentVisit]
+            } else {
+                $scope.currentVisit = 0;
+                $scope.selectedVisit = $scope.visits[$scope.currentVisit]
+            }
+        }
+
+        $scope.preVisit = function () {
+            if ($scope.currentVisit > 0 ) {
+                $scope.currentVisit--;
+                $scope.selectedVisit = $scope.visits[$scope.currentVisit]
+            } else {
+                $scope.currentVisit = $scope.visits.length - 1;
+                $scope.selectedVisit = $scope.visits[$scope.currentVisit]
+            }
+        }
+        //visits.sort(function (a, b) {
+        //    return new Date(a.entryDate).getTime() + new Date(b.entryDate).getTime()
+        //});
+
         $scope.followUp.condition = $scope.parentConsultation.condition;
     });
 
@@ -81,7 +182,6 @@ function newFollowUp(appointmentResource,appSettings, $scope, $stateParams, foll
 
     $scope.submit = function () {
         $scope.loading = true;
-        console.log($scope.followUp);
         //follow up related to clinic and consultation
         $scope.followUp.consultationId = $stateParams.consultationId;
 

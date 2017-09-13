@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content">
-            <div class=" animated fadeInRightBig">
+            <div class="animated fadeInRightBig">
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="contact-box center-version">
@@ -121,7 +121,7 @@
                             <div class="contact-box-footer">
                                 <div class="m-t-xs btn-group">
                                     <a class="btn btn-xs btn-white" ui-sref="patient.edit_patient({patientid: patientdetails.id})" ><i class="fa fa-edit"></i> Edit </a>
-                                    <a class="btn btn-xs btn-white"><i class="fa fa-calendar-o"></i> Assign date</a>
+                                    <a class="btn btn-xs btn-white" ui-sref="consultation.consultation_list({patientid: patientdetails.id })"><i class="fa fa-calendar-o"></i> Visits</a>
                                     <a class="btn btn-xs btn-white" ng-click="openModal()"><i class="fa fa-trash"></i> Delete</a>
                                 </div>
                             </div>
@@ -138,20 +138,69 @@
                                 <div id="vertical-timeline" class="vertical-container dark-timeline center-orientation">
 
                                     <div ng-repeat="consultation in consultations" class="tmline">
+
+                                        <div class="vertical-timeline-block" ng-repeat="followup in consultation.followUps | orderBy:'-entryDate' ">
+                                            <div class="vertical-timeline-icon yellow-bg" tooltip-placement="left" tooltip="FollowUp">
+                                                <!--<i class="fa fa-files-o"></i>-->
+                                                <i class="fa">F</i>
+
+                                            </div>
+
+                                            <div class="vertical-timeline-content">
+                                                <h2 class="text-capitalize">{{followup.condition}}</h2>
+                                                <p tooltip-placement="left" tooltip="Subjective" >
+                                                    {{followup.subjective}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Title">
+                                                    {{followup.title}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Physical Exam">
+                                                    {{followup.physicalExam}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Medication">
+                                                    {{followup.medication}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Radio">
+                                                    {{followup.radiology}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Diagnosis">
+                                                    {{followup.diagnosis}}
+                                                </p>
+                                                <p tooltip-placement="left" tooltip="Recommendation">
+                                                    {{followup.recommendation}}
+                                                </p>
+                                                <p >
+                                                    <span ng-repeat="image in followup.images">
+                                                        <img width="60" height="60" ng-src="{{appSettings.serverPath}}/images/{{image.imageName}}" style="padding:3px;" onclick="window.open(this.src)" class="pointer" />
+                                                    </span>
+                                                </p>
+
+                                                <p tooltip-placement="left" tooltip="Assessment">
+                                                    {{followup.assessment}}
+                                                </p>
+                                                <div ui-sref="consultation.view_followup({patientid:patientdetails.id,followupId:followup.id})" class="btn btn-sm btn-primary"> More info</div>
+                                                <span class="vertical-date">
+                                                    {{followup.entryDate | timeAgo}} <br />
+                                                    <small>{{followup.entryDate | date : 'MMM d, y h:mm a'}}</small>
+                                                </span>
+                                            </div>
+                                        </div>
+
                                         <div class="vertical-timeline-block">
-                                            <div class="vertical-timeline-icon navy-bg" tooltip="Condition">
-                                                <i class="fa fa-briefcase"></i>
+                                            <div class="vertical-timeline-icon navy-bg" tooltip-placement="left" tooltip="Condition">
+                                                <!--<i class="fa fa-briefcase"></i>-->
+                                                <i class="fa">NC</i>
                                             </div>
 
                                             <div class="vertical-timeline-content">
                                                 <h2 class="text-capitalize">{{consultation.condition}}</h2>
-                                                <p tooltip="Chief Complaint" >
+                                                <p tooltip-placement="left" tooltip="Chief Complaint" >
                                                     {{consultation.chiefComplaint}}
                                                 </p>
-                                                <p tooltip="Differential Diagnosis">
+                                                <p tooltip-placement="left" tooltip="Differential Diagnosis">
                                                      {{consultation.differentialDiagnosis}}
                                                 </p>
-                                                <p tooltip="Diagnosis">
+                                                <p tooltip-placement="left" tooltip="Diagnosis">
                                                      {{consultation.diagnosis}}
                                                 </p>
                                                 <div  ui-sref="consultation.view_consultation({consultationId:consultation.id})" class="btn btn-sm btn-primary"> More info</div>
@@ -163,26 +212,7 @@
                                         </div>
 
 
-                                        <div class="vertical-timeline-block" ng-repeat="followup in consultation.followUps">
-                                            <div class="vertical-timeline-icon yellow-bg" tooltip="FollowUp">
-                                                <i class="fa fa-files-o"></i>
-                                            </div>
-
-                                            <div class="vertical-timeline-content">
-                                                <h2 class="text-capitalize">{{consultation.condition}}</h2>
-                                                <p tooltip="Subjective">
-                                                     {{consultation.subjective}}
-                                                </p>
-                                                <p tooltip="Medication">
-                                                     {{consultation.medication}}
-                                                </p>
-                                                <div ui-sref="consultation.view_followup({patientid:patientdetails.id,followupId:followup.id})"  class="btn btn-sm btn-primary"> More info</div>
-                                                <span class="vertical-date">
-                                                    {{followup.entryDate | timeAgo}} <br />
-                                                    <small>{{followup.entryDate | date : 'MMM d, y h:mm a'}}</small>
-                                                </span>
-                                            </div>
-                                        </div>
+                                        
 
 
                                     </div>

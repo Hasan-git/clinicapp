@@ -9,6 +9,8 @@ function newConsultation(appointmentResource,appSettings, $scope, $stateParams, 
     $scope.appSettings = appSettings
     $scope.idOfpatient = $stateParams.patientid;
     $scope.showPayment = false;
+    $scope.eventOut = false;
+
     //$scope.patient.entryDate = new Date();
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -21,8 +23,20 @@ function newConsultation(appointmentResource,appSettings, $scope, $stateParams, 
 
     appointmentResource.appointments.GetByPatientId({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.appointment = JSON.parse(angular.toJson(data));
-        if (data)
+        if (data) {
             $scope.showPayment = true
+            if (data.eventStatus != "CheckedOut")
+                $scope.eventOut = true
+        }
+        $scope.eventCheckout = function () {
+            appointmentResource.appointments.updateStatus({ id: data.id, status: "CheckedOut" })
+                .$promise.then(function (data) {
+                    $scope.eventOut = false
+                    toaster.pop('success', "Notification", "Patient Checked-Out", 2000);
+                }, function () {
+                    toaster.pop('error', "Notification", "Unable to change status", 3000);
+                });
+        };
     }, function (err) {
         console.log(err)
     });
