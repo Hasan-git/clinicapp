@@ -16,7 +16,7 @@
                     <input type="text" class="form-control" ng-model="task.patientName" ng-hide="checkbox" tabindex="0" autofocus />
                     <!--| filter:{lastName:$viewValue} -->
                     <!--| filterBy: ['firstName', 'lastName']: $viewValue-->
-                    <input type="text" class="form-control" ng-model="task.patientName" ng-show="checkbox" tabindex="-1" typeahead="state as state.displayName for state in patients | searchField: 'firstName': 'lastName' | filter:$viewValue " typeahead-min-length="2" typeahead-template-url="customTemplate.html" typeahead-on-select="onSelect($item, $model, $label)"/>
+                    <input type="text" class="form-control" ng-model="task.patientName" ng-show="checkbox" tabindex="-1"  typeahead-wait-ms="600" typeahead="state as state.displayName for state in patients | searchField: 'firstName': 'lastName' | filter:$viewValue " typeahead-min-length="2" typeahead-template-url="customTemplate.html" typeahead-on-select="onSelect($item, $model, $label)"/>
                 </div>
                 
                 <label class="col-sm-1 text-center m-t-xs" tooltip="Existing patient">

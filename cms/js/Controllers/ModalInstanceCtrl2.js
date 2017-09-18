@@ -80,12 +80,12 @@ function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientR
     $scope.checked = function () {
         if ($scope.checkbox == true) {
 
-            $scope.task = "";
+           // $scope.task = "";
             $scope.existingPatient = true;
 
         } else if ($scope.checkbox == false) {
 
-            $scope.task = "";
+            //$scope.task = "";
             $scope.existingPatient = false;
         }
     };

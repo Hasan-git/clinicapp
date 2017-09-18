@@ -251,6 +251,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                 return false;
             } else {
                 $scope.newAppointment.$save(function (data) {
+                    $scope.hub.newApp(data)
                     $scope.calendarLoading(false);
                     //$scope.events.push($scope.newAppointment);
                     data.start = utcToLocal(data.start)
@@ -476,6 +477,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                     $scope.newAppointment.reason = result[0].reason;
 
                     $scope.newAppointment.$save(function (data) {
+                        $scope.hub.newApp(data);
                         $scope.calendarLoading(false);
 
                         data.start = utcToLocal(data.start)
@@ -595,7 +597,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
     /* Event sources array */
     $scope.eventSources = [$scope.events];
 
-    var hub = new Hub('AppointmentHub',
+    $scope.hub = new Hub('AppointmentHub',
       {
           //rootPath: "http://localhost:63392/signalr",
           rootPath: appSettings.serverPath + "/signalr",
@@ -606,6 +608,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
           listeners: {
               'newConnection': function (id) {
                   console.log(id)
+                  
               },
               'removeConnection': function (id) {
                   console.log(id)
@@ -647,11 +650,11 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                   })
 
               },
-              'newAppointment': function (appointment) {
+              'newApp': function (appointment) {
 
                   var events = uiCalendarConfig.calendars.myCalendar1.fullCalendar('clientEvents')
 
-
+                  console.log("newAppointment")
                   var isExistingEvent = events.some(function (ev) {
                         return ev.id == appointment.id
                   })
@@ -721,11 +724,11 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
 
                       }
                   })
-              }
+              },
           },
 
           //server side methods
-          methods: ['tell', 'payment'],
+          methods: ['tell', 'newApp'],
           //handle connection error
           errorHandler: function (error) {
               console.error(error);
@@ -748,6 +751,11 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
               }
           }
       });
+    
+    $scope.callback = function () {
+        console.log("asdasd")
+        $scope.hub.newApp("aaa")
+    }
     //hub.connect()
 
 } //  +++++ END Calendar Controller ++++

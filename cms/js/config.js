@@ -84,7 +84,7 @@ function config($stateProvider, $urlRouterProvider) {
             url: "/patients_list",
             templateUrl: "views/patient/patients_list.html",
             controller: patientList,
-            controllerAs: "patlist",
+            //controllerAs: "patlist",
             data: { pageTitle: 'Patients list' },
             resolve: {
                 resolvedData: function (patientResource, $rootScope) {
