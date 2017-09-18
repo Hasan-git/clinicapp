@@ -29,6 +29,9 @@ function patientsData(patientResource,$q) {
         var anotherDeferred = $q.defer();
         patientResource.patient.query(function (data) {
             data.map(function (patient) {
+                patient.firstName = angular.lowercase(patient.firstName)
+                patient.middelName = angular.lowercase(patient.middelName)
+                patient.lastName = angular.lowercase(patient.lastName)
                 patient.filterTerms={
                     firstName: patient.firstName,
                     middelName: patient.middelName,
