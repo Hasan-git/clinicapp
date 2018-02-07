@@ -3,11 +3,12 @@
     .controller('CalendarCtrl', CalendarCtrl)
 ;
 
-function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResource, uiCalendarConfig, $compile, $templateCache, patientsData, toaster, $rootScope) {
+function CalendarCtrl(appSettings, Hub, ngAudio, $scope, $modal, $filter, appointmentResource, uiCalendarConfig, $compile, $templateCache, patientsData, toaster, $rootScope) {
 
     // Render event 
     //$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-
+    $scope.paymentSound = ngAudio.load("js/soft-bells.mp3"); // returns NgAudioObject
+    $scope.appointmentSound = ngAudio.load("js/notification.mp3"); // returns NgAudioObject
 
     // function called to open a new patient file using modal, when an appointment is not for existing patient 
     $scope.newPatientModal = function (event,eventId,appointmentId) {
@@ -136,9 +137,9 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
         }
     };
 
-    patientsData.setProfiles().then(function (data) {
-        $scope.patients = patientsData.getProfiles();
-    });
+    //patientsData.setProfiles().then(function (data) {
+    //    $scope.patients = patientsData.getProfiles();
+    //});
 
     $scope.calendarLoading(true);
     appointmentResource.appointments.query().$promise.then(function (data) {
@@ -585,10 +586,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                 }
             },
             eventOverlap: function (stillEvent, movingEvent) {
-
                 return stillEvent.allDay && movingEvent.allDay;
-
-
             }
         }
     };
@@ -648,13 +646,14 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                           uiCalendarConfig.calendars.myCalendar1.fullCalendar('updateEvent', events[key])
                       }
                   })
-
               },
               'newApp': function (appointment) {
 
                   var events = uiCalendarConfig.calendars.myCalendar1.fullCalendar('clientEvents')
 
                   console.log("newAppointment")
+                  $scope.appointmentSound.play();
+
                   var isExistingEvent = events.some(function (ev) {
                         return ev.id == appointment.id
                   })
@@ -719,6 +718,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
                       $('.popover').remove();
                       if (val.id == appointment.id) {
                           toaster.pop('info', "Payment Released", appointment.patientName + " should pay : " + appointment.payment, 900000);
+                          $scope.paymentSound.play();
                           events[key].payment = appointment.payment 
                           uiCalendarConfig.calendars.myCalendar1.fullCalendar('renderEvent', events[key], true)
 
@@ -753,7 +753,7 @@ function CalendarCtrl(appSettings,Hub, $scope, $modal, $filter, appointmentResou
       });
     
     $scope.callback = function () {
-        console.log("asdasd")
+        console.log("Connect..")
         $scope.hub.newApp("aaa")
     }
     //hub.connect()

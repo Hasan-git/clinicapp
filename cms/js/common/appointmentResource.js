@@ -7,7 +7,9 @@
             appointments: $resource(appSettings.serverPath + "/api/Appointments/:id", null,
             {
                 'get': { method: 'GET', isArray: false},
-                'update': { method: 'PUT' },
+                'update': {
+                    method: 'POST',
+                },
                 'GetByPatientId': {
                     method: 'GET',
                     url: appSettings.serverPath + "/api/Appointments/patient/:id",

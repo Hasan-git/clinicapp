@@ -5,7 +5,14 @@
 
         return $resource(appSettings.serverPath + "/api/FollowUp/:id", null,
             {
-                'update': { method: 'PUT', url: appSettings.serverPath + '/api/FollowUp/' },
+                'update': { method: 'POST', url: appSettings.serverPath + '/api/FollowUp/update' },
+                'getLastVisitByConsulationId': {
+                    method: "GET",
+                    url: appSettings.serverPath + "/api/followup/getlastVisitByConsultationId/:id",
+                    params: {
+                        id: '@id',
+                    }
+                },
                 'deleteFollowUp': {
                     method: "DELETE",
                     url: appSettings.serverPath + "/api/followup/Delete",

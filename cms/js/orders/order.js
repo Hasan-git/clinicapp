@@ -40,7 +40,7 @@ function patientsData(patientResource,$q) {
             })
             profileRepository = data;
 
-            anotherDeferred.resolve("Done");
+            anotherDeferred.resolve(data);
         });
        return anotherDeferred.promise;
     };
@@ -48,8 +48,24 @@ function patientsData(patientResource,$q) {
     var getProfile = function () {
         return profileRepository;
     }
+
+
+    var checkGetProfile = function () {
+        var anotherDeferred = $q.defer();
+        if (!profileRepository.length) {
+             setProfile().then(function (res) {
+                 anotherDeferred.resolve(res);
+            })
+        } else {
+            anotherDeferred.resolve(profileRepository);
+        }
+        return anotherDeferred.promise;
+    }
+
+
     return {
         setProfiles: setProfile,
+        checkGetProfiles: checkGetProfile,
         getProfiles: getProfile
     }
 }

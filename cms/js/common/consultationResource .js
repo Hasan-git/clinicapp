@@ -7,7 +7,10 @@
             consultations: $resource(appSettings.serverPath + "/api/Consultations/:id", null,
             {
                 'get': { method: 'GET' },
-                'update': { method: 'PUT' },
+                'edit': {
+                    method: 'POST',
+                    url: appSettings.serverPath + '/api/Consultations/edit',
+                },
                 'Consultation': {
                     //Get specific doctors's consultation by consultation Id
                     method: 'GET',

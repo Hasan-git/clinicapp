@@ -82,9 +82,9 @@ function modalDemoCtrl($scope, $modal) {
                 },
                 patientRepo: function (patientsData) {
                     var patients = [];
-                    return patientsData.setProfiles().then(function (data) {
-                        return patients = patientsData.getProfiles();
-                    });
+                    //return patientsData.setProfiles().then(function (data) {
+                    //    return patients = patientsData.getProfiles();
+                    //});
                 }
             }
         });

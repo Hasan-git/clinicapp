@@ -6,6 +6,7 @@
 (function () {
     angular.module('inspinia', [
         'ngCookies',
+        'ngAudio',                      //angular audio
         'angular.filter',   //https://github.com/a8m/angular-filter
         'datatables.buttons',
         'angular-ladda',
@@ -18,23 +19,13 @@
         'ui.calendar', // Calendar
         'ui.bootstrap', // Bootstrap
         'ui.checkbox', // Custom checkbox
-        'ui.knob', // Knob input
         'ui.switchery', // iOS7 swich style
-        'angular-peity', // Peity charts
-        'easypiechart', // Easy pie charts
-        'angular-flot', // Flot charts
-        'angular-rickshaw', // Rickshaw carts
         'summernote', // Text editor
         'nouislider', // Slider
         'datePicker', // Datapicker
         'datatables', // Dynamic tables
         'localytics.directives', // Chosen select
-        'angles', // Charts js
-        'ngGrid', // ngGrid
-        'ui.codemirror', // Code editor
-        'ui.tree', // Nestable list
         'cgNotify', // Angular notify
-        'colorpicker.module', // Color picker
         'xeditable',                    // X-editable     
         "SignalR",
     ]);

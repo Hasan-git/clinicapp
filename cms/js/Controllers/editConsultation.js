@@ -55,7 +55,7 @@ function editConsultation(appSettings, $scope, $stateParams, resolvedData, consu
         $scope.loading = true;
         $scope.consultation.clinicId = $rootScope.rootclinicId;
         $scope.consultation.medicalStatus.id = $scope.patientHistory.id
-        consultationResource.consultations.update($scope.consultation).$promise.then(function (data) {
+        consultationResource.consultations.edit($scope.consultation).$promise.then(function (data) {
 
             if (uploader.queue.length) {
                 uploader.onBeforeUploadItem = function (item) {

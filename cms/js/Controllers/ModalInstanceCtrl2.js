@@ -5,7 +5,7 @@ angular
 ;
 
 
-function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientRepo, $rootScope, initialDate, uiCalendarConfig) {
+function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientRepo, $rootScope, initialDate, uiCalendarConfig, patientsData) {
 
     var response = [];
     $scope.patients = [];
@@ -27,6 +27,12 @@ function ModalInstanceCtrl2($scope, $modalInstance, $filter, statetype, patientR
     d2.setMinutes(30);
     $scope.max = d2;
 
+    patientsData.checkGetProfiles().then(function (data) {
+        $scope.patients = data;
+        patientsData.setProfiles().then(function (data) {
+            angular.extend($scope.patients, data);
+        })
+    });
 
     /////////////////////////
     function isOverlapping(event) {

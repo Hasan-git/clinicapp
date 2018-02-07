@@ -24,6 +24,13 @@ function newFollowUp($filter,appointmentResource, appSettings, $scope, $statePar
         }, 100);
     }
 
+    followUpResource.getLastVisitByConsulationId({ id: $stateParams.consultationId }).$promise.then(function (data) {
+        $scope.lastVisit = JSON.parse(angular.toJson(data))
+        $scope.followUp.medication =  $scope.lastVisit.medication
+        console.log("LAST VISIT > " , JSON.parse(angular.toJson(data)) )
+    });
+    
+
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
         $scope.patientResolved = JSON.parse(angular.toJson(data))
